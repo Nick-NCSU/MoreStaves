@@ -63,9 +63,9 @@ namespace DubNation.Projectiles
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active)
 			{
-				player.ClearBuff(ModContent.BuffType<Buffs.WoodBuff>());
+				player.ClearBuff(ModContent.BuffType<Buffs.StoneBuff>());
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.WoodBuff>()))
+			if (player.HasBuff(ModContent.BuffType<Buffs.StoneBuff>()))
 			{
 				projectile.timeLeft = 2;
 			}

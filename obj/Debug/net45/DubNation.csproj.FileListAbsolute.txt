@@ -29,4 +29,3 @@ C:\Users\nickt\OneDrive\Documents\My Games\Terraria\ModLoader\Mod Sources\DubNat
 C:\Users\nickt\OneDrive\Documents\My Games\Terraria\ModLoader\Mod Sources\DubNation\bin\Debug\net45\tModLoader.exe
 C:\Users\nickt\OneDrive\Documents\My Games\Terraria\ModLoader\Mod Sources\DubNation\bin\Debug\net45\tModLoader.pdb
 C:\Users\nickt\OneDrive\Documents\My Games\Terraria\ModLoader\Mod Sources\DubNation\bin\Debug\net45\tModLoader.xml
-C:\Users\nickt\OneDrive\Documents\My Games\Terraria\ModLoader\Mod Sources\DubNation\obj\Debug\net45\DubNation.csproj.CopyComplete
