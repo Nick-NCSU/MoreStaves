@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "99DLF6T2CDVJbF28B9X1KqNQ0mc8Im3ZEB0p6Q2awrx5Vb5zEArn5BkMIkb5qWS5kScq86bmipOSTdIsp+HK8A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\nickt\\OneDrive\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\DubNation\\DubNation.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\nickt\\.nuget\\packages\\tmodloader.codeassist\\0.1.3\\tmodloader.codeassist.0.1.3.nupkg.sha512"
+  ],
+  "logs": []
+}
