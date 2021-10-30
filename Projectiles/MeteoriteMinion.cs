@@ -87,7 +87,7 @@ namespace DubNation.Projectiles
 				vectorToCursor *= speed;
 				projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToCursor) / inertia;
 			} 
-			else if (distanceToCursor < 20)
+			else if (distanceToCursor < 10)
 			{
 				vectorToCursor.Normalize();
 				vectorToCursor *= speed;
