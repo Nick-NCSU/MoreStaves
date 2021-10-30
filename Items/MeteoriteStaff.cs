@@ -18,7 +18,7 @@ namespace DubNation.Items
 
 		public override void SetDefaults()
 		{
-			item.damage = 34;
+			item.damage = 35;
 			item.width = 40;
 			item.height = 40;
 			item.useTime = 36;
