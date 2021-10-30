@@ -63,9 +63,9 @@ namespace DubNation.Projectiles
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active)
 			{
-				player.ClearBuff(ModContent.BuffType<Buffs.WoodBuff>());
+				player.ClearBuff(ModContent.BuffType<Buffs.GoldBuff>());
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.WoodBuff>()))
+			if (player.HasBuff(ModContent.BuffType<Buffs.GoldBuff>()))
 			{
 				projectile.timeLeft = 2;
 			}
@@ -215,11 +215,11 @@ namespace DubNation.Projectiles
 
 			#region Attack
 			float projSpeed = 6f;
-			if (projectile.ai[0]++ > 60)
+			if (projectile.ai[0] == 0)
 			{
 				if (foundTarget)
 				{
-					projectile.ai[0] = 0;
+					projectile.ai[0] = 60;
 					for (int x = -10; x <= 10; x += 5)
                     {
 						for(int y = -10; y <= 10; y += 10)
@@ -234,8 +234,13 @@ namespace DubNation.Projectiles
                     }
 				}
 			}
+			else
+            {
+				projectile.ai[0]--;
+            }
 			
             #endregion
+
             #region Animation and visuals
             // So it will lean slightly towards the direction it's moving
             projectile.rotation = projectile.velocity.X * 0.05f;
