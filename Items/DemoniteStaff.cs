@@ -6,19 +6,19 @@ using Terraria.ModLoader;
 
 namespace DubNation.Items
 {
-	class MeteoriteStaff : ModItem
+	class DemoniteStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Meteorite Staff");
-			Tooltip.SetDefault("Summons a meteorite minion to fight for you.\nThe minion will follow your cursor and inflict On Fire! on enemies they touch.");
+			DisplayName.SetDefault("Demonite Staff");
+			Tooltip.SetDefault("Summons a demonite minion to fight for you.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 16;
+			item.damage = 11;
 			item.width = 40;
 			item.height = 40;
 			item.useTime = 36;
@@ -30,8 +30,8 @@ namespace DubNation.Items
 			item.mana = 10;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = ModContent.BuffType<Buffs.MeteoriteBuff>();
-			item.shoot = ModContent.ProjectileType<Projectiles.MeteoriteMinion>();
+			item.buffType = ModContent.BuffType<Buffs.DemoniteBuff>();
+			item.shoot = ModContent.ProjectileType<Projectiles.DemoniteMinion>();
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -44,8 +44,9 @@ namespace DubNation.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.MeteoriteBar, 18);
-			recipe.AddTile(TileID.Anvils);
+			recipe.AddIngredient(ItemID.ShadowScale, 6);
+			recipe.AddIngredient(ItemID.DemoniteBar, 12);
+			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
 		}
