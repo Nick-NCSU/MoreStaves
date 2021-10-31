@@ -86,11 +86,13 @@ namespace DubNation.Projectiles
 				{
 					distanceFromTarget = between;
 					targetCenter = npc.Center;
+					projectile.hide = false;
 					foundTarget = true;
 				}
 			}
 			if (!foundTarget)
 			{
+				projectile.hide = true;
 				// This code is required either way, used for finding a target
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
@@ -104,6 +106,7 @@ namespace DubNation.Projectiles
 						{
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
+							projectile.hide = false;
 							foundTarget = true;
 						}
 					}
