@@ -41,7 +41,7 @@ namespace DubNation.Projectiles
 			projectile.minionSlots = 1f;
 			// Needed so the minion doesn't despawn on collision with enemies or tiles
 			projectile.penetrate = -1;
-			Main.projFrames[projectile.type] = 4;
+			Main.projFrames[projectile.type] = 8;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -145,11 +145,7 @@ namespace DubNation.Projectiles
 						float between = Vector2.Distance(npc.Center, projectile.Center);
 						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 100f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
+						if ((closest && inRange) || !foundTarget)
 						{
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
@@ -242,14 +238,16 @@ namespace DubNation.Projectiles
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			int frameSpeed = 10;
+			int firstFrame = foundTarget ? 4 : 0;
+			int lastFrame = foundTarget ? 7 : 3;
 			projectile.frameCounter++;
 			if (projectile.frameCounter >= frameSpeed)
 			{
 				projectile.frameCounter = 0;
 				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
+				if (projectile.frame > lastFrame || projectile.frame < firstFrame)
 				{
-					projectile.frame = 0;
+					projectile.frame = firstFrame;
 				}
 			}
 
