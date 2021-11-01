@@ -30,7 +30,7 @@ namespace DubNation.Projectiles
 			projectile.width = 21;
 			projectile.height = 39;
 			// Makes the minion go through tiles freely
-			projectile.tileCollide = true;
+			projectile.tileCollide = false;
 
 			// These below are needed for a minion weapon
 			// Only controls if it deals damage to enemies on contact (more on that later)
@@ -164,7 +164,7 @@ namespace DubNation.Projectiles
 
 			#region Movement
 			// Default movement parameters (here for attacking)
-			float speed = 8f;
+			float speed = 10f;
 			float inertia = 20f;
 
 			if (foundTarget)
