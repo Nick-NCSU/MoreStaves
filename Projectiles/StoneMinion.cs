@@ -66,9 +66,9 @@ namespace DubNation.Projectiles
 			{
 				player.ClearBuff(ModContent.BuffType<Buffs.StoneBuff>());
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.StoneBuff>()))
+			if (!player.HasBuff(ModContent.BuffType<Buffs.StoneBuff>()))
 			{
-				projectile.timeLeft = 2;
+				projectile.Kill();
 			}
 			#endregion
 			#region Movement

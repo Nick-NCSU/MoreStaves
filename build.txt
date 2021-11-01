@@ -1,4 +1,4 @@
 displayName = DubNation
 author = Penguin
-version = 0.2.1
+version = 0.2.2
 homepage = https://github.com/Nick-NCSU/DubNationMod
