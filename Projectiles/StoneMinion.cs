@@ -40,7 +40,7 @@ namespace DubNation.Projectiles
 			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
 			projectile.minionSlots = 1f;
 			// Needed so the minion doesn't despawn on collision with enemies or tiles
-			projectile.penetrate = -1;
+			projectile.penetrate = 5;
 			projectile.timeLeft = 120;
 		}
 

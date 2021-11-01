@@ -11,7 +11,7 @@ namespace DubNation.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Stone Staff");
-			Tooltip.SetDefault("Summons a boulder minion to fight for you. Breaks after 10 attacks.");
+			Tooltip.SetDefault("Summons a boulder minion to fight for you.\nBreaks after 5 attacks. Crumbles after 2 seconds.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
@@ -21,8 +21,8 @@ namespace DubNation.Items
 			item.damage = 18;
 			item.width = 40;
 			item.height = 40;
-			item.useTime = 80;
-			item.useAnimation = 80;
+			item.useTime = 120;
+			item.useAnimation = 120;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
 			item.rare = ItemRarityID.White;
