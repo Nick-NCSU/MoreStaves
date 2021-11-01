@@ -168,7 +168,7 @@ namespace DubNation.Projectiles
 			#endregion
 
 			#region Attack
-			float projSpeed2 = 15f;
+			float projSpeed2 = 12f;
 			if (delay == 0)
 			{
 				if (foundTarget)
@@ -178,9 +178,9 @@ namespace DubNation.Projectiles
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
 					Vector2 velocity = -minionToProjectile;
-					Projectile.NewProjectile(projectile.Center, velocity + new Vector2(0,2), ModContent.ProjectileType<SpectreProjectile>(), 20, 1, projectile.owner);
-					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<SpectreProjectile>(), 35, 1, projectile.owner);
-					Projectile.NewProjectile(projectile.Center, velocity - new Vector2(0, 2), ModContent.ProjectileType<SpectreProjectile>(), 20, 1, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity + new Vector2(0, 1.5f), ModContent.ProjectileType<SpectreProjectile>(), 60, 1, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<SpectreSeekingProjectile>(), 80, 1, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity - new Vector2(0, 1.5f), ModContent.ProjectileType<SpectreProjectile>(), 60, 1, projectile.owner);
 				}
 			}
 			else

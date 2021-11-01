@@ -20,8 +20,8 @@ namespace DubNation.Projectiles
             projectile.height = 32;
             projectile.friendly = true;
             projectile.minion = true;
-            projectile.penetrate = 3;
-            projectile.timeLeft = 300;
+            projectile.penetrate = -1;
+            projectile.timeLeft = 30;
             projectile.ignoreWater = true;
             projectile.tileCollide = false;
         }
