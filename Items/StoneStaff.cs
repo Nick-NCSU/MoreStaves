@@ -21,8 +21,8 @@ namespace DubNation.Items
 			item.damage = 18;
 			item.width = 40;
 			item.height = 40;
-			item.useTime = 60;
-			item.useAnimation = 60;
+			item.useTime = 80;
+			item.useAnimation = 80;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
 			item.rare = ItemRarityID.White;

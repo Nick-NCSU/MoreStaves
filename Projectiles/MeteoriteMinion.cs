@@ -72,7 +72,7 @@ namespace DubNation.Projectiles
 			#endregion
 
 			#region Movement
-			float speed = 6f;
+			float speed = 8f;
 			float inertia = 20f;
 			Vector2 cursorPosition = Main.MouseWorld;
 			Vector2 vectorToCursor = cursorPosition - projectile.Center;

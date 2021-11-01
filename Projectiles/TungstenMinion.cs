@@ -177,7 +177,7 @@ namespace DubNation.Projectiles
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
 					Vector2 velocity = -minionToProjectile;
-					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<CopperProjectile>(), 12, 1, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<TungstenProjectile>(), 13, 1, projectile.owner);
 				}
 			}
 			else
