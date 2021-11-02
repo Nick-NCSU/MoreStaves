@@ -1,4 +1,5 @@
 name: New Functionality
+description: Suggest new functionality
 body:
 - type: textarea
   attributes:
