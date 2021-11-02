@@ -237,7 +237,7 @@ namespace DubNation.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-			damage += Math.Min(target.defense / 2, target.defense > 0 ? 30 : 0);
+			damage += Math.Min(target.defense, 20);
 			base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
     }
