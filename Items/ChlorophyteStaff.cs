@@ -6,32 +6,32 @@ using Terraria.ModLoader;
 
 namespace DubNation.Items
 {
-	class HallowedStaff : ModItem
+	class ChlorophyteStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hallowed Staff");
-			Tooltip.SetDefault("Summons a hallowed minion to fight for you.");
+			DisplayName.SetDefault("Chlorophyte Staff");
+			Tooltip.SetDefault("Summons a chlorophyte minion to fight for you.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 12;
+			item.damage = 10;
 			item.width = 40;
 			item.height = 40;
-			item.useTime = 24;
-			item.useAnimation = 24;
+			item.useTime = 36;
+			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
-			item.mana = 5;
+			item.mana = 10;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = ModContent.BuffType<Buffs.HallowedBuff>();
-			item.shoot = ModContent.ProjectileType<Projectiles.HallowedMinion>();
+			item.buffType = ModContent.BuffType<Buffs.ChlorophyteBuff>();
+			item.shoot = ModContent.ProjectileType<Projectiles.ChlorophyteMinion>();
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
@@ -44,7 +44,8 @@ namespace DubNation.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.HallowedBar, 8);
+			recipe.AddIngredient(ItemID.ChlorophyteBar, 9);
+			recipe.AddIngredient(ItemID.TurtleShell, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
