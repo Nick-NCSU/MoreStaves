@@ -6,13 +6,13 @@ using Terraria.ModLoader;
 
 namespace DubNation.Projectiles
 {
-	public class SpectreMinion : ModProjectile
+	public class ChlorophyteMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Spectre");
+			DisplayName.SetDefault("Chlorophyte");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[projectile.type] = 8;
+			Main.projFrames[projectile.type] = 2;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
@@ -27,7 +27,7 @@ namespace DubNation.Projectiles
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 34;
+			projectile.width = 72;
 			projectile.height = 44;
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
@@ -64,9 +64,9 @@ namespace DubNation.Projectiles
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active)
 			{
-				player.ClearBuff(ModContent.BuffType<Buffs.SpectreBuff>());
+				player.ClearBuff(ModContent.BuffType<Buffs.ChlorophyteBuff>());
 			}
-			if (player.HasBuff(ModContent.BuffType<Buffs.SpectreBuff>()))
+			if (player.HasBuff(ModContent.BuffType<Buffs.ChlorophyteBuff>()))
 			{
 				projectile.timeLeft = 2;
 			}
@@ -144,7 +144,11 @@ namespace DubNation.Projectiles
 						float between = Vector2.Distance(npc.Center, projectile.Center);
 						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
-						if ((closest && inRange) || !foundTarget)
+						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
+						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
+						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
+						bool closeThroughWall = between < 100f;
+						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
 						{
 							distanceFromTarget = between;
 							targetCenter = npc.Center;
@@ -163,23 +167,24 @@ namespace DubNation.Projectiles
 			#endregion
 
 			#region Attack
-			float projSpeed2 = 12f;
+			float projSpeed2 = 6f;
 			if (delay == 0)
 			{
+				projectile.frame = 0;
 				if (foundTarget)
 				{
-					delay = 15;
+					delay = 120;
+					projectile.frame = 1;
 					Vector2 minionToProjectile = projectile.Center - targetCenter;
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
 					Vector2 velocity = -minionToProjectile;
-					Projectile.NewProjectile(projectile.Center, velocity + new Vector2(0, 1.5f), ModContent.ProjectileType<SpectreProjectile>(), 60, 1, projectile.owner);
-					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<SpectreSeekingProjectile>(), 80, 1, projectile.owner);
-					Projectile.NewProjectile(projectile.Center, velocity - new Vector2(0, 1.5f), ModContent.ProjectileType<SpectreProjectile>(), 60, 1, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<ChlorophyteProjectile>(), 60, 8, projectile.owner);
 				}
 			}
 			else
 			{
+				projectile.frame = delay < 30 ? 0 : 1;
 				delay--;
 			}
 			#endregion
@@ -233,22 +238,6 @@ namespace DubNation.Projectiles
 			#region Animation and visuals
 			// So it will lean slightly towards the direction it's moving
 			projectile.rotation = projectile.velocity.X * 0.05f;
-			projectile.spriteDirection = projectile.velocity.X < 0 ? -1 : projectile.velocity.X > 0 ? 1 : projectile.spriteDirection;
-
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 10;
-			int firstFrame = foundTarget ? 4 : 0;
-			int lastFrame = foundTarget ? 7 : 3;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame > lastFrame || projectile.frame < firstFrame)
-				{
-					projectile.frame = firstFrame;
-				}
-			}
 
 			// Some visuals here
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
