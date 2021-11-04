@@ -12,7 +12,7 @@ namespace DubNation.Projectiles
 		{
 			DisplayName.SetDefault("Chlorophyte");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[projectile.type] = 2;
+			Main.projFrames[projectile.type] = 4;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
@@ -27,8 +27,8 @@ namespace DubNation.Projectiles
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 72;
-			projectile.height = 44;
+			projectile.width = 46;
+			projectile.height = 46;
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
 
@@ -170,11 +170,9 @@ namespace DubNation.Projectiles
 			float projSpeed2 = 6f;
 			if (delay == 0)
 			{
-				projectile.frame = 0;
 				if (foundTarget)
 				{
 					delay = 120;
-					projectile.frame = 1;
 					Vector2 minionToProjectile = projectile.Center - targetCenter;
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
@@ -184,7 +182,6 @@ namespace DubNation.Projectiles
 			}
 			else
 			{
-				projectile.frame = delay < 30 ? 0 : 1;
 				delay--;
 			}
 			#endregion
@@ -237,7 +234,27 @@ namespace DubNation.Projectiles
 
 			#region Animation and visuals
 			// So it will lean slightly towards the direction it's moving
-			projectile.rotation = projectile.velocity.X * 0.05f;
+			if (foundTarget)
+			{
+				projectile.rotation = projectile.DirectionTo(targetCenter).ToRotation() - 180;
+			}
+			else
+			{
+				projectile.rotation = projectile.velocity.ToRotation() - 180;
+			}
+
+
+			int frameSpeed = 20;
+			projectile.frameCounter++;
+			if (projectile.frameCounter >= frameSpeed)
+			{
+				projectile.frameCounter = 0;
+				projectile.frame++;
+				if (projectile.frame >= Main.projFrames[projectile.type])
+				{
+					projectile.frame = 0;
+				}
+			}
 
 			// Some visuals here
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
