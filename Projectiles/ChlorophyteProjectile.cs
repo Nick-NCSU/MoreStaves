@@ -16,8 +16,8 @@ namespace DubNation.Projectiles
 
         public override void SetDefaults()
         {
-            projectile.width = 58;
-            projectile.height = 38;
+            projectile.width = 18;
+            projectile.height = 26;
             projectile.friendly = true;
             projectile.minion = true;
             projectile.penetrate = -1;
@@ -95,13 +95,16 @@ namespace DubNation.Projectiles
 			#endregion
 
 			#region Animation and visuals
-			if (projectile.ai[0]++ >= 360)
-            {
-                projectile.ai[0] = 0;
-            }
-            projectile.rotation = projectile.ai[0]/5;
-            // Some visuals here
-            Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
+			if (foundTarget)
+			{
+				projectile.rotation = projectile.DirectionTo(targetCenter).ToRotation() + 90;
+			}
+			else
+			{
+				projectile.rotation = projectile.velocity.ToRotation() + 90;
+			}
+			// Some visuals here
+			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
 		}
