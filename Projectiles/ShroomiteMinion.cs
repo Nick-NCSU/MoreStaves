@@ -12,7 +12,7 @@ namespace DubNation.Projectiles
 		{
 			DisplayName.SetDefault("Shroomite");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[projectile.type] = 1;
+			Main.projFrames[projectile.type] = 18;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
@@ -27,8 +27,8 @@ namespace DubNation.Projectiles
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 42;
-			projectile.height = 42;
+			projectile.width = 50;
+			projectile.height = 48;
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = true;
 
