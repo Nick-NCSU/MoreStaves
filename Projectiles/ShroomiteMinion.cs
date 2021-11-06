@@ -70,7 +70,7 @@ namespace DubNation.Projectiles
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
 					Vector2 velocity = -minionToProjectile;
-					Projectile.NewProjectile(projectile.Center, velocity, ProjectileID.PygmySpear, 60, 8, projectile.owner);
+					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<ShroomiteProjectile>(), 60, 8, projectile.owner);
 				}
 			}
 			else
