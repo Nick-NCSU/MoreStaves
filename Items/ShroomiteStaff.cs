@@ -6,12 +6,12 @@ using Terraria.ModLoader;
 
 namespace DubNation.Items
 {
-	class ChlorophyteStaff : ModItem
+	class ShroomiteStaff : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Chlorophyte Staff");
-			Tooltip.SetDefault("Summons a chlorophyte minion to fight for you.");
+			DisplayName.SetDefault("Shroomite Staff");
+			Tooltip.SetDefault("Summons a shroomite minion to fight for you.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
@@ -30,8 +30,8 @@ namespace DubNation.Items
 			item.mana = 10;
 			item.noMelee = true;
 			item.summon = true;
-			item.buffType = ModContent.BuffType<Buffs.ChlorophyteBuff>();
-			item.shoot = ModContent.ProjectileType<Projectiles.ChlorophyteMinion>();
+			item.buffType = ModContent.BuffType<Buffs.ShroomiteBuff>();
+			item.shoot = ModContent.ProjectileType<Projectiles.ShroomiteMinion>();
 		}
 
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack)
