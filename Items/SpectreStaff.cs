@@ -25,7 +25,7 @@ namespace DubNation.Items
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Yellow;
 			item.UseSound = SoundID.Item1;
 			item.mana = 10;
 			item.noMelee = true;

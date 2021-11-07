@@ -24,5 +24,10 @@ namespace DubNation.Projectiles
         {
             return true;
         }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            projectile.Kill();
+            return true;
+        }
     }
 }
