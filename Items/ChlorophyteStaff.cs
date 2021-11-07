@@ -25,7 +25,7 @@ namespace DubNation.Items
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item1;
 			item.mana = 10;
 			item.noMelee = true;
@@ -45,7 +45,6 @@ namespace DubNation.Items
 		{
 			ModRecipe recipe = new ModRecipe(mod);
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 9);
-			recipe.AddIngredient(ItemID.TurtleShell, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();

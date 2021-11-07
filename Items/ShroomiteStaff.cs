@@ -18,14 +18,14 @@ namespace DubNation.Items
 
 		public override void SetDefaults()
 		{
-			item.damage = 30;
+			item.damage = 40;
 			item.width = 40;
 			item.height = 40;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item1;
 			item.mana = 10;
 			item.noMelee = true;
@@ -44,8 +44,7 @@ namespace DubNation.Items
 		public override void AddRecipes()
 		{
 			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(ItemID.ChlorophyteBar, 9);
-			recipe.AddIngredient(ItemID.TurtleShell, 1);
+			recipe.AddIngredient(ItemID.ShroomiteBar, 9);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.SetResult(this);
 			recipe.AddRecipe();
