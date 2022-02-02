@@ -12,7 +12,7 @@ namespace MoreStaves.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Wood Staff");
-			Tooltip.SetDefault("Summons a coat rack minion to fight for you");
+			Tooltip.SetDefault("Summons a coat rack to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
