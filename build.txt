@@ -1,4 +1,4 @@
-displayName = DubNation
+displayName = MoreStaves
 author = Penguin
-version = 0.3.1
-homepage = https://github.com/Nick-NCSU/DubNationMod
+version = 0.4
+homepage = https://github.com/Nick-NCSU/MoreStaves

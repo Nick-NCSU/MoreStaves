@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 
-namespace DubNation.Items
+namespace MoreStaves.Items
 {
 	public class ScourgeStaff : ModItem
 	{
