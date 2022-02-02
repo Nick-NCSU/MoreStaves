@@ -25,7 +25,7 @@ namespace MoreStaves.Items
 			item.useAnimation = 24;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Pink;
 			item.UseSound = SoundID.Item1;
 			item.mana = 5;
 			item.noMelee = true;
