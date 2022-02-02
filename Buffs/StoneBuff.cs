@@ -11,7 +11,7 @@ namespace MoreStaves.Buffs
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Boulder");
-			Description.SetDefault("The boulder minion will fight for you");
+			Description.SetDefault("The boulder will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

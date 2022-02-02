@@ -11,7 +11,7 @@ namespace MoreStaves.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Stone Staff");
-			Tooltip.SetDefault("Summons a boulder minion to fight for you.\nBreaks after 5 attacks. Crumbles after 2 seconds.");
+			Tooltip.SetDefault("Summons a boulder to fight for you.\nBreaks after 5 attacks. Crumbles after 2 seconds.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
