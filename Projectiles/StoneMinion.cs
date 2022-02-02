@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DubNation.Projectiles
+namespace MoreStaves.Projectiles
 {
 	public class StoneMinion : ModProjectile
 	{

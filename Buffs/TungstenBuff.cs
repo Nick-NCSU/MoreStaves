@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DubNation.Buffs
+namespace MoreStaves.Buffs
 {
 	public class TungstenBuff : ModBuff
 	{

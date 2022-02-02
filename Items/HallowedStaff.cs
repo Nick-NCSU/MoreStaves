@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DubNation.Items
+namespace MoreStaves.Items
 {
 	class HallowedStaff : ModItem
 	{

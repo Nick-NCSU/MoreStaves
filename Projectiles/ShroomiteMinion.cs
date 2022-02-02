@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace DubNation.Projectiles
+namespace MoreStaves.Projectiles
 {
 	public class ShroomiteMinion : ModProjectile
 	{
@@ -88,7 +88,6 @@ namespace DubNation.Projectiles
 			}
 			bool flag = false;
 			bool flag2 = false;
-			bool flag3 = false;
 			bool flag4 = false;
 			if (projectile.lavaWet)
 			{
@@ -386,9 +385,7 @@ namespace DubNation.Projectiles
 							float num127 = (float)Math.Sqrt(num124 * num124 + num126 * num126);
 							num127 = 18f / num127;
 							num124 *= num127;
-							num126 *= num127;
-							int num128 = projectile.damage;
-							if (num124 < 0f)
+                            if (num124 < 0f)
 							{
 								projectile.direction = -1;
 							}
@@ -400,7 +397,6 @@ namespace DubNation.Projectiles
 						}
 					}
 				}
-				Vector2 vector12 = Vector2.Zero;
 				bool flag9 = false;
 				if (projectile.ai[1] != 0f)
 				{
@@ -464,10 +460,6 @@ namespace DubNation.Projectiles
 					{
 						flag4 = true;
 					}
-				}
-				if (Main.player[projectile.owner].position.Y + (float)Main.player[projectile.owner].height - 8f > projectile.position.Y + (float)projectile.height)
-				{
-					flag3 = true;
 				}
 				Collision.StepUp(ref projectile.position, ref projectile.velocity, projectile.width, projectile.height, ref projectile.stepSpeed, ref projectile.gfxOffY);
 				if (projectile.velocity.Y == 0f)
