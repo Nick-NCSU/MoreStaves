@@ -30,6 +30,7 @@ namespace MoreStaves.Items
 			item.mana = 10;
 			item.noMelee = true;
 			item.summon = true;
+			item.knockBack = 1f;
 			item.buffType = ModContent.BuffType<Buffs.MeteoriteBuff>();
 			item.shoot = ModContent.ProjectileType<Projectiles.MeteoriteMinion>();
 		}
