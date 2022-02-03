@@ -10,8 +10,8 @@ namespace MoreStaves.Buffs
 	{
 		public override void SetDefaults()
 		{
-			DisplayName.SetDefault("Luminite Minion");
-			Description.SetDefault("The True Eye of Cthulhu minion will fight for you");
+			DisplayName.SetDefault("True Eye of Cthulhu");
+			Description.SetDefault("The True Eye of Cthulhu will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}

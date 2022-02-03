@@ -11,7 +11,7 @@ namespace MoreStaves.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Luminite Staff");
-			Tooltip.SetDefault("Summons a True Eye of Cthulhu minion to fight for you.");
+			Tooltip.SetDefault("Summons a True Eye of Cthulhu to fight for you.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
