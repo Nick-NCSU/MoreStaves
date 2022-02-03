@@ -11,7 +11,7 @@ namespace MoreStaves.Buffs
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Coat Rack");
-			Description.SetDefault("The coat rack minion will fight for you");
+			Description.SetDefault("The coat rack will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
