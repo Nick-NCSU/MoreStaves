@@ -30,6 +30,7 @@ namespace MoreStaves.Items
 			item.mana = 10;
 			item.noMelee = true;
 			item.summon = true;
+			item.knockBack = 5f;
 			item.buffType = ModContent.BuffType<Buffs.StoneBuff>();
 			item.shoot = ModContent.ProjectileType<Projectiles.StoneMinion>();
 		}
