@@ -1,4 +1,4 @@
 displayName = MoreStaves
 author = Penguin
-version = 0.4
+version = 0.4.1
 homepage = https://github.com/Nick-NCSU/MoreStaves
