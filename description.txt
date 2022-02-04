@@ -1,1 +1,6 @@
 MoreStaves
+
+Mod that adds:
+- 20+ new staff summon minions
+- Calamity Mod Integration
+- Wiki found on the GitHub
