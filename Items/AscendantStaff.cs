@@ -11,21 +11,21 @@ namespace MoreStaves.Items
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Ascendant Staff");
-			Tooltip.SetDefault("Summons Cluster Bombs to fight for you.\nMore powerful attacks against targetted enemies.");
+			Tooltip.SetDefault("Summons Cluster Bombs to fight for you.\nMore powerful attacks against targeted enemies.");
 			ItemID.Sets.GamepadWholeScreenUseRange[item.type] = true;
 			ItemID.Sets.LockOnIgnoresCollision[item.type] = true;
 		}
 
 		public override void SetDefaults()
 		{
-			item.damage = 500;
+			item.damage = 200;
 			item.width = 40;
 			item.height = 40;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.SwingThrow;
 			item.value = 10;
-			item.rare = 12;
+			item.rare = ItemRarityID.Purple;
 			item.UseSound = SoundID.Item1;
 			item.mana = 10;
 			item.noMelee = true;
