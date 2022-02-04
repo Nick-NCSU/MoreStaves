@@ -10,9 +10,9 @@ namespace MoreStaves.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Luminite");
+			DisplayName.SetDefault("Ascendant");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[projectile.type] = 1;
+			Main.projFrames[projectile.type] = 2;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
@@ -27,8 +27,8 @@ namespace MoreStaves.Projectiles
 
 		public sealed override void SetDefaults()
 		{
-			projectile.width = 52;
-			projectile.height = 52;
+			projectile.width = 22;
+			projectile.height = 42;
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
 
@@ -68,6 +68,8 @@ namespace MoreStaves.Projectiles
 		Vector2 clusterPos;
 		// Cluster attack delay
 		int clusterDelay = 0;
+		// Movement direction
+		Boolean down = false;
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
@@ -98,36 +100,36 @@ namespace MoreStaves.Projectiles
 				if (between < distanceFromTarget)
 				{
 					targets[4] = player.MinionAttackTargetNPC;
-				} 
+				}
 				else
-                {
+				{
 					targets[4] = -1;
-                }
+				}
 			}
 			else
-            {
+			{
 				targets[4] = -1;
-            }
+			}
 
 			// For each target check if it is within range
 			// Else remove it as a target
-			for(int i = 0; i < 5; i++)
-            {
-				if(targets[i] == -1)
-                {
-					if(marks[i] != -1)
-                    {
+			for (int i = 0; i < 5; i++)
+			{
+				if (targets[i] == -1)
+				{
+					if (marks[i] != -1)
+					{
 						Main.projectile[marks[i]].Kill();
 						marks[i] = -1;
-                    }
+					}
 					charge[i] = 0;
 					continue;
-                }
+				}
 				NPC npc = Main.npc[targets[i]];
-				if(npc.CanBeChasedBy())
-                {
-					if(Vector2.Distance(npc.Center, projectile.Center) >= distanceFromTarget)
-                    {
+				if (npc.CanBeChasedBy())
+				{
+					if (Vector2.Distance(npc.Center, projectile.Center) >= distanceFromTarget)
+					{
 						if (marks[i] != -1)
 						{
 							Main.projectile[marks[i]].Kill();
@@ -136,9 +138,9 @@ namespace MoreStaves.Projectiles
 						targets[i] = -1;
 						charge[i] = 0;
 					}
-                }
+				}
 				else
-                {
+				{
 					if (marks[i] != -1)
 					{
 						Main.projectile[marks[i]].Kill();
@@ -146,8 +148,8 @@ namespace MoreStaves.Projectiles
 					}
 					targets[i] = -1;
 					charge[i] = 0;
-                }
-            }
+				}
+			}
 
 			// Find other targets if possible
 			for (int c = 0; c < 4; c++)
@@ -155,9 +157,9 @@ namespace MoreStaves.Projectiles
 				for (int i = 0; targets[c] == -1 && i < Main.maxNPCs; i++)
 				{
 					if (!CheckTargets(i))
-                    {
+					{
 						continue;
-                    }
+					}
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy())
 					{
@@ -170,26 +172,40 @@ namespace MoreStaves.Projectiles
 					}
 				}
 			}
-            #endregion
+			#endregion
 
-            #region Movement
-			projectile.position += player.Center + new Vector2(0, -100f) - projectile.Center;
+			#region Movement
+			if (down)
+			{
+				if (projectile.ai[0]-- == 0)
+				{
+					down = false;
+				}
+			}
+			else
+			{
+				if (projectile.ai[0]++ >= 500)
+				{
+					down = true;
+				}
+			}
+			projectile.position += player.Center - new Vector2(0, (projectile.ai[0] / 20) + 60f) - projectile.Center;
 			#endregion
 
 			#region Attack
 			// Attack each found target
 			for (int i = 0; i < 5; i++)
 			{
-				if(targets[i] == -1)
-                {
+				if (targets[i] == -1)
+				{
 					continue;
-                }
+				}
 				if (charge[i] > 50)
 				{
 					Vector2 position = Main.npc[targets[i]].Center;
 					Main.PlayTrackedSound(SoundID.DD2_ExplosiveTrapExplode);
 					Projectile.NewProjectile(position, new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 3000, 0, projectile.owner);
-					if(i == 4)
+					if (i == 4)
 					{
 						clusterPos = position;
 						clusterDelay = 20;
@@ -199,23 +215,23 @@ namespace MoreStaves.Projectiles
 					targets[i] = -1;
 					marks[i] = -1;
 					charge[i] = 0;
-				} 
+				}
 				else
-                {
-					if(marks[i] == -1)
-                    {
+				{
+					if (marks[i] == -1)
+					{
 						marks[i] = Projectile.NewProjectile(projectile.Center, new Vector2(0, 0), i == 4 ? ModContent.ProjectileType<AscendantTargetedMarkProjectile>() : ModContent.ProjectileType<AscendantMarkProjectile>(), 0, 1, projectile.owner);
 					}
 					Main.projectile[marks[i]].scale *= 1.02f;
 					Main.projectile[marks[i]].position = Main.npc[targets[i]].Center - Main.projectile[marks[i]].Size / 2;
 					charge[i]++;
-                }
-            }
-			if(clusterDelay == 0)
-            {
+				}
+			}
+			if (clusterDelay == 0)
+			{
 				clusterDelay = 20;
-				if(cluster == 1)
-                {
+				if (cluster == 1)
+				{
 					Main.PlayTrackedSound(SoundID.DD2_ExplosiveTrapExplode);
 					Projectile.NewProjectile(clusterPos - new Vector2(-100f, 0), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 2000, 0, projectile.owner);
 					Projectile.NewProjectile(clusterPos - new Vector2(100f, 0), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 2000, 0, projectile.owner);
@@ -223,8 +239,8 @@ namespace MoreStaves.Projectiles
 					Projectile.NewProjectile(clusterPos - new Vector2(0, 100f), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 2000, 0, projectile.owner);
 					cluster = 2;
 				}
-				else if(cluster == 2)
-                {
+				else if (cluster == 2)
+				{
 					Vector2[] centers =
 					{
 						clusterPos -  new Vector2(-100f, 0),
@@ -233,7 +249,7 @@ namespace MoreStaves.Projectiles
 						clusterPos -  new Vector2(0, 100f)
 					};
 					foreach (Vector2 center in centers)
-                    {
+					{
 						Main.PlayTrackedSound(SoundID.DD2_ExplosiveTrapExplode);
 						Projectile.NewProjectile(center - new Vector2(-40f, 0), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 1000, 0, projectile.owner);
 						Projectile.NewProjectile(center - new Vector2(40f, 0), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 1000, 0, projectile.owner);
@@ -241,33 +257,25 @@ namespace MoreStaves.Projectiles
 						Projectile.NewProjectile(center - new Vector2(0, 40f), new Vector2(0, 0), ProjectileID.DD2ExplosiveTrapT3Explosion, 1000, 0, projectile.owner);
 					}
 					cluster = 0;
-                }
+				}
 			}
 			else
-            {
+			{
 				clusterDelay--;
-            }
+			}
 			#endregion
 
 			#region Animation and visuals
-			// So it will lean slightly towards the direction it's moving
-			projectile.rotation = projectile.velocity.X * 0.05f;
 
 			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
+			if (InCombat())
 			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
+				projectile.frame = 0;
 			}
-
-			// Some visuals here
-			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
+			else
+            {
+				projectile.frame = 1;
+            }
 			#endregion
 
 		}
@@ -282,6 +290,18 @@ namespace MoreStaves.Projectiles
 				}
 			}
 			return true;
+		}
+
+		private Boolean InCombat()
+        {
+			for (int i = 0; i < 5; i++)
+			{
+				if (targets[i] != -1)
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
