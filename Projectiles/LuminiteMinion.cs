@@ -54,7 +54,8 @@ namespace MoreStaves.Projectiles
 		{
 			return true;
 		}
-		int[] projDelay = { 0, 0, 0 };
+
+        readonly int[] projDelay = { 0, 0, 0 };
 		public override void AI()
 		{
 			Player player = Main.player[projectile.owner];
