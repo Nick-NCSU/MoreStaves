@@ -48,7 +48,8 @@ namespace MoreStaves.Projectiles
             }
             // Determines the rotation of the item
             projectile.rotation = projectile.ai[0]/5;
-            // Some visuals here
+
+            // Adds light around the minion
             Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
