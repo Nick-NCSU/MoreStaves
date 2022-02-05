@@ -27,8 +27,8 @@ namespace MoreStaves.Items
 		public override void SetDefaults()
 		{
 			item.damage = 11;
-			item.width = 80;
-			item.height = 80;
+			item.width = 20;
+			item.height = 20;
 			item.useTime = 36;
 			item.useAnimation = 36;
 			item.useStyle = ItemUseStyleID.HoldingOut;
@@ -41,10 +41,8 @@ namespace MoreStaves.Items
 			item.knockBack = 3f;
 			// Spawns the Crimtane Buff
 			item.buffType = ModContent.BuffType<Buffs.CrimtaneBuff>();
-			// Shoots a crimtane minion
+			// Shoots a Crimtane minion
 			item.shoot = ModContent.ProjectileType<Projectiles.CrimtaneMinion>();
-			// Scale of the item
-			item.scale = 0.4f;
 			// Prevents the default item graphic from being used
 			item.noUseGraphic = true;
 		}
@@ -71,19 +69,11 @@ namespace MoreStaves.Items
 			recipe.AddRecipe();
 		}
 
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-        {
-			// Draws the staff with shading and animated texture
-			Texture2D texture = mod.GetTexture("Items/CrimtaneStaff");
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition + new Vector2(0, 2400 * 0.4f), Main.itemAnimations[item.type].GetFrame(texture), lightColor, 0f, texture.Size() * 0.5f, scale * 0.4f, SpriteEffects.None, 0f);
-			return false;
-        }
-
         public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
         {
 			// Draws the glowing gem and effect as a glow mask
 			Texture2D glow = mod.GetTexture("Items/CrimtaneGlow");
-			spriteBatch.Draw(glow, item.Center - Main.screenPosition + new Vector2(0, 2400 * 0.4f), Main.itemAnimations[item.type].GetFrame(glow), Color.White, 0f, glow.Size() * 0.5f, scale * 0.4f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(glow, item.Center - Main.screenPosition, Main.itemAnimations[item.type].GetFrame(glow), Color.White, rotation, glow.Size() * 0.5f, scale, SpriteEffects.None, 0f);
         }
     }
 }

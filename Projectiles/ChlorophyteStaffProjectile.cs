@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
-    // Adds the Crimtane Staff Projectile which is displayed when using the Staff
-    class CrimtaneStaffProjectile : ModProjectile
+    // Adds the Chlorophyte Staff Projectile which is displayed when using the Staff
+    class ChlorophyteStaffProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -28,8 +28,8 @@ namespace MoreStaves.Projectiles
             projectile.frame = new Random().Next(0, 30);
         }
 
-        // Shares texture with Crimtane Staff
-        public override string Texture => "MoreStaves/Items/CrimtaneStaff";
+        // Shares texture with Chlorophyte Staff
+        public override string Texture => "MoreStaves/Items/ChlorophyteStaff";
 
         public override void AI()
 		{
@@ -56,7 +56,7 @@ namespace MoreStaves.Projectiles
         // Moves the projectile to the direction of the player
         private void UpdatePlayerVisuals(Player player, Vector2 playerHandPos)
         {
-            if(player.direction == 1)
+            if (player.direction == 1)
             {
                 projectile.Center = playerHandPos - projectile.Size + new Vector2(10, -13);
                 projectile.rotation = -0.4f;
