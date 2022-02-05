@@ -73,7 +73,9 @@ namespace MoreStaves.Items
         {
 			// Draws the glowing gem and effect as a glow mask
 			Texture2D glow = mod.GetTexture("Items/CrimtaneGlow");
-			spriteBatch.Draw(glow, item.Center - Main.screenPosition, Main.itemAnimations[item.type].GetFrame(glow), Color.White, rotation, glow.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			Rectangle sourceRectangle = Main.itemAnimations[item.type].GetFrame(glow);
+			Vector2 offset = sourceRectangle.Size() * 0.5f;
+			spriteBatch.Draw(glow, item.Center - Main.screenPosition - new Vector2(0, 18f), sourceRectangle, Color.White, rotation, offset, scale, SpriteEffects.None, 0f);
         }
     }
 }

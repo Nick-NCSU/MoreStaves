@@ -15,6 +15,8 @@ namespace MoreStaves.Buffs
 			Description.SetDefault("The chlorophyte minion will fight for you");
 
 			// Don't save buff when exiting
+
+			// Don't save buff when exiting
 			Main.buffNoSave[Type] = true;
 			// Don't show buff time as it is (effectively) infinite
 			Main.buffNoTimeDisplay[Type] = true;

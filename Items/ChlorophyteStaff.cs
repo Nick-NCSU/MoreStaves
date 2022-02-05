@@ -68,19 +68,13 @@ namespace MoreStaves.Items
 			recipe.AddRecipe();
 		}
 
-		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
-		{
-			// Draws the staff with shading and animated texture
-			Texture2D texture = mod.GetTexture("Items/ChlorophyteStaff");
-			spriteBatch.Draw(texture, item.Center - Main.screenPosition, Main.itemAnimations[item.type].GetFrame(texture), lightColor, rotation, texture.Size() * 0.5f, scale, SpriteEffects.None, 0f);
-			return false;
-		}
-
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
 		{
 			// Draws the glowing gem and effect as a glow mask
 			Texture2D glow = mod.GetTexture("Items/ChlorophyteGlow");
-			spriteBatch.Draw(glow, item.Center - Main.screenPosition, Main.itemAnimations[item.type].GetFrame(glow), Color.White, rotation, glow.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			Rectangle sourceRectangle = Main.itemAnimations[item.type].GetFrame(glow);
+			Vector2 offset = sourceRectangle.Size() * 0.5f;
+			spriteBatch.Draw(glow, item.Center - Main.screenPosition - new Vector2(0, 18f), sourceRectangle, Color.White, rotation, offset, scale, SpriteEffects.None, 0f);
 		}
 	}
 }

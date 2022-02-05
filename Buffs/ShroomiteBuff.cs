@@ -6,18 +6,23 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Buffs
 {
+	// Adds the buff for the Shroomite Minion
 	public class ShroomiteBuff : ModBuff
 	{
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Shroomite Minion");
 			Description.SetDefault("The shroomite minion will fight for you");
+
+			// Don't save buff when exiting
 			Main.buffNoSave[Type] = true;
+			// Don't show buff time as it is (effectively) infinite
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
+			// If the player currently has the Shroomite Minion summoned then add time to buff else remove buff
 			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.ShroomiteMinion>()] > 0)
 			{
 				player.buffTime[buffIndex] = 18000;

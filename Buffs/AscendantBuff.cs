@@ -6,18 +6,23 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Buffs
 {
+	// Adds the buff for the Cluster Bombs
 	public class AscendantBuff : ModBuff
 	{
 		public override void SetDefaults()
 		{
 			DisplayName.SetDefault("Cluster Bombs");
 			Description.SetDefault("Cluster Bombs will fight for you");
+
+			// Don't save buff when exiting
 			Main.buffNoSave[Type] = true;
+			// Don't show buff time as it is (effectively) infinite
 			Main.buffNoTimeDisplay[Type] = true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
+			// If the player currently has the Cluster Bombs summoned then add time to buff else remove buff
 			if (player.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.AscendantMinion>()] > 0)
 			{
 				player.buffTime[buffIndex] = 18000;
