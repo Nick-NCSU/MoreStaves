@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MoreStaves.Items
 {
-	// Adds the crimtane staff to the game
+	// Adds the copper staff to the game
 	class CopperStaff : ModItem
 	{
 		public override void SetStaticDefaults()

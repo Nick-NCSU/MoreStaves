@@ -119,12 +119,11 @@ namespace MoreStaves.Projectiles
 			Vector2 targetBehind = projectile.position;
 			bool foundTarget = false;
 
-			// This code is required if your minion weapon has the targeting feature
+			// If the player has targetted an npc then check its validity as a target
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, projectile.Center);
-				// Reasonable distance away so it doesn't target across multiple screens
 				if (between < 2000f)
 				{
 					distanceFromTarget = between;
@@ -133,9 +132,9 @@ namespace MoreStaves.Projectiles
 					foundTarget = true;
 				}
 			}
+			// If no target is currently found then search all NPCs and find the closest one
 			if (!foundTarget)
 			{
-				// This code is required either way, used for finding a target
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC npc = Main.npc[i];
@@ -145,8 +144,6 @@ namespace MoreStaves.Projectiles
 						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
 						bool closeThroughWall = between < 100f;
 						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
 						{
@@ -159,14 +156,12 @@ namespace MoreStaves.Projectiles
 				}
 			}
 
-			// friendly needs to be set to true so the minion can deal contact damage
-			// friendly needs to be set to false so it doesn't damage things like target dummies while idling
-			// Both things depend on if it has a target or not, so it's just one assignment here
-			// You don't need this assignment if your minion is shooting things instead of dealing contact damage
+			// Minion is friendly if it has no target
 			projectile.friendly = foundTarget;
 			#endregion
 
 			#region Attack
+			// Speed of projectile
 			float projSpeed2 = 8f;
 			if (delay == 0)
 			{
@@ -177,6 +172,7 @@ namespace MoreStaves.Projectiles
 					minionToProjectile.Normalize();
 					minionToProjectile *= projSpeed2;
 					Vector2 velocity = -minionToProjectile;
+					// Spawns a projectile in direction of target
 					Projectile.NewProjectile(projectile.Center, velocity, ModContent.ProjectileType<TungstenProjectile>(), 13, 1, projectile.owner);
 				}
 			}
@@ -187,7 +183,6 @@ namespace MoreStaves.Projectiles
 			#endregion
 
 			#region Movement
-			// Default movement parameters (here for attacking)
 			float speed = 8f;
 			float inertia = 20f;
 
@@ -236,23 +231,11 @@ namespace MoreStaves.Projectiles
 			// So it will lean slightly towards the direction it's moving
 			projectile.rotation = projectile.velocity.X * 0.05f;
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
+
 		}
-    }
+	}
 }

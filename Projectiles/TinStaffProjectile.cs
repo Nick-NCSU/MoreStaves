@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
-    // Adds the Copper Staff Projectile which is displayed when using the Staff
-    class CopperStaffProjectile : ModProjectile
+    // Adds the Tin Staff Projectile which is displayed when using the Staff
+    class TinStaffProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
         {
@@ -28,8 +28,8 @@ namespace MoreStaves.Projectiles
             projectile.frame = new Random().Next(0, 30);
         }
 
-        // Shares texture with Copper Staff
-        public override string Texture => "MoreStaves/Items/CopperStaff";
+        // Shares texture with Tin Staff
+        public override string Texture => "MoreStaves/Items/TinStaff";
 
         public override void AI()
 		{
