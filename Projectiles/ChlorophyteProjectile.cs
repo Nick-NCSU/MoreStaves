@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds projectile shot by Chlorophyte Minion
     class ChlorophyteProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -26,6 +27,7 @@ namespace MoreStaves.Projectiles
             projectile.tileCollide = false;
         }
 
+		// Allows projectile to deal contact damage
         public override bool MinionContactDamage()
         {
             return true;
@@ -78,7 +80,6 @@ namespace MoreStaves.Projectiles
 			#endregion
 
 			#region Movement
-			// Default movement parameters (here for attacking)
 			float speed = 15f * projectile.timeLeft / 240;
 			float inertia = 20f;
 			if (foundTarget)
@@ -103,7 +104,8 @@ namespace MoreStaves.Projectiles
 			{
 				projectile.rotation = projectile.velocity.ToRotation() + 90;
 			}
-			// Some visuals here
+
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 

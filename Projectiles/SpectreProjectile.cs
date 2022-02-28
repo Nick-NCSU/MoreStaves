@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+    // Adds projectile shot by Spectre Minion
     class SpectreProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -26,6 +27,7 @@ namespace MoreStaves.Projectiles
             projectile.tileCollide = false;
         }
 
+        // Allows projectile to deal contact damage
         public override bool MinionContactDamage()
         {
             return true;
@@ -40,7 +42,8 @@ namespace MoreStaves.Projectiles
                 projectile.ai[0] = 0;
             }
             projectile.rotation = projectile.ai[0]/5;
-            // Some visuals here
+            
+            // Adds light around the minion
             Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 

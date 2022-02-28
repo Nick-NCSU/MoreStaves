@@ -6,22 +6,23 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds the Demonite Minion as a projectile.
 	public class DemoniteMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Demonite");
+
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[projectile.type] = 1;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
-			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
-			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
+			// Ensures minion can properly spawn when summoned and is replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
+			// Damage reduction related to homing attacks
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
 
@@ -31,25 +32,25 @@ namespace MoreStaves.Projectiles
 			projectile.height = 39;
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
-
-			// These below are needed for a minion weapon
-			// Only controls if it deals damage to enemies on contact (more on that later)
 			projectile.friendly = true;
-			// Only determines the damage type
+
+			// Deals minion damage
 			projectile.minion = true;
-			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
+
+			// Number of minion slots used
 			projectile.minionSlots = 1f;
-			// Needed so the minion doesn't despawn on collision with enemies or tiles
+
+			// Prevents being destroyed on collision
 			projectile.penetrate = -1;
 		}
 
-		// Here you can decide if your minion breaks things like grass or pots
+		// Prevents tiles being broken by minion
 		public override bool? CanCutTiles()
 		{
 			return false;
 		}
 
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
+		// Allows minion to deal contact damage
 		public override bool MinionContactDamage()
 		{
 			return true;
@@ -117,12 +118,11 @@ namespace MoreStaves.Projectiles
 			Vector2 targetCenter = projectile.position;
 			bool foundTarget = false;
 
-			// This code is required if your minion weapon has the targeting feature
+			// If the player has targetted an npc then check its validity as a target
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, projectile.Center);
-				// Reasonable distance away so it doesn't target across multiple screens
 				if (between < 2000f)
 				{
 					distanceFromTarget = between;
@@ -130,9 +130,9 @@ namespace MoreStaves.Projectiles
 					foundTarget = true;
 				}
 			}
+			// If no target is currently found then search all NPCs and find the closest one
 			if (!foundTarget)
 			{
-				// This code is required either way, used for finding a target
 				for (int i = 0; i < Main.maxNPCs; i++)
 				{
 					NPC npc = Main.npc[i];
@@ -151,15 +151,11 @@ namespace MoreStaves.Projectiles
 				}
 			}
 
-			// friendly needs to be set to true so the minion can deal contact damage
-			// friendly needs to be set to false so it doesn't damage things like target dummies while idling
-			// Both things depend on if it has a target or not, so it's just one assignment here
-			// You don't need this assignment if your minion is shooting things instead of dealing contact damage
+			// Minion is friendly if it has no target
 			projectile.friendly = foundTarget;
 			#endregion
 
 			#region Movement
-			// Default movement parameters (here for attacking)
 			float speed = 10f;
 			float inertia = 20f;
 
@@ -219,25 +215,13 @@ namespace MoreStaves.Projectiles
 				projectile.rotation = (float) Math.Acos(projectile.velocity.X / projectile.velocity.Length()) - 90;
             }
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
 		}
 
+		// Minion inflicts poisoned debuff on npc hit
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
 			target.AddBuff(BuffID.Poisoned, 180);

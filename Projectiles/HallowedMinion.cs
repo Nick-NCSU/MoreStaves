@@ -6,22 +6,23 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds the Hallowed Minion as a projectile.
 	public class HallowedMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Hallowed");
+
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[projectile.type] = 1;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
-			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
-			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
+			// Ensures minion can properly spawn when summoned and is replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
+			// Damage reduction related to homing attacks
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
 
@@ -29,27 +30,26 @@ namespace MoreStaves.Projectiles
 		{
 			projectile.width = 32;
 			projectile.height = 32;
+
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
-
-			// These below are needed for a minion weapon
-			// Only controls if it deals damage to enemies on contact (more on that later)
 			projectile.friendly = true;
-			// Only determines the damage type
+
+			// Deals minion damage
 			projectile.minion = true;
-			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
+			// Number of minion slots used
 			projectile.minionSlots = 0.5f;	
-			// Needed so the minion doesn't despawn on collision with enemies or tiles
+			// Prevents being destroyed
 			projectile.penetrate = -1;
 		}
 
-		// Here you can decide if your minion breaks things like grass or pots
+		// Prevents tiles being broken by minion
 		public override bool? CanCutTiles()
 		{
 			return false;
 		}
 
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
+		// Allows minion to deal contact damage
 		public override bool MinionContactDamage()
 		{
 			return true;
@@ -75,8 +75,7 @@ namespace MoreStaves.Projectiles
 			Vector2 idlePosition = player.Center;
 			idlePosition.Y -= 48f; // Go up 48 coordinates (three tiles from the center of the player)
 
-			// If your minion doesn't aimlessly move around when it's idle, you need to "put" it into the line of other summoned minions
-			// The index is projectile.minionPos
+			// Finds idle position related to other spawned minions
 			float minionPositionOffsetX = (10 + projectile.minionPos * 40) * -player.direction;
 			idlePosition.X += minionPositionOffsetX; // Go behind the player
 
@@ -117,12 +116,11 @@ namespace MoreStaves.Projectiles
 			Vector2 targetCenter = projectile.position;
 			bool foundTarget = false;
 
-			// This code is required if your minion weapon has the targeting feature
+			// If the player has targetted an npc then check its validity as a target
 			if (player.HasMinionAttackTargetNPC)
 			{
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, projectile.Center);
-				// Reasonable distance away so it doesn't target across multiple screens
 				if (between < 2000f)
 				{
 					distanceFromTarget = between;
@@ -130,6 +128,7 @@ namespace MoreStaves.Projectiles
 					foundTarget = true;
 				}
 			}
+			// If no target is currently found then search all NPCs and find the closest one
 			if (!foundTarget)
 			{
 				// This code is required either way, used for finding a target
@@ -142,8 +141,6 @@ namespace MoreStaves.Projectiles
 						bool closest = Vector2.Distance(projectile.Center, targetCenter) > between;
 						bool inRange = between < distanceFromTarget;
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
 						bool closeThroughWall = between < 100f;
 						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall))
 						{
@@ -155,10 +152,7 @@ namespace MoreStaves.Projectiles
 				}
 			}
 
-			// friendly needs to be set to true so the minion can deal contact damage
-			// friendly needs to be set to false so it doesn't damage things like target dummies while idling
-			// Both things depend on if it has a target or not, so it's just one assignment here
-			// You don't need this assignment if your minion is shooting things instead of dealing contact damage
+			// Minion is friendly if it has no target
 			projectile.friendly = foundTarget;
 			#endregion
 
@@ -216,25 +210,13 @@ namespace MoreStaves.Projectiles
 			// So it will lean slightly towards the direction it's moving
 			projectile.rotation = projectile.velocity.X * 0.05f;
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
 		}
 
+		// Deals more damage depending on defense
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
 			damage += Math.Min(target.defense, 20);

@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+    // Adds projectile shot by Ascendant Minion
     class AscendantMarkProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -26,6 +27,7 @@ namespace MoreStaves.Projectiles
             projectile.tileCollide = false;
         }
 
+        // Disallows projectile to deal contact damage
         public override bool MinionContactDamage()
         {
             return false;
@@ -35,7 +37,7 @@ namespace MoreStaves.Projectiles
 		{
 
             #region Animation and visuals
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 

@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+    // Adds projectile shot by Luminite Minion
     class LuminiteOrbProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -26,6 +27,7 @@ namespace MoreStaves.Projectiles
             projectile.tileCollide = false;
         }
 
+        // Allows projectile to deal contact damage
         public override bool MinionContactDamage()
         {
             return true;
@@ -41,20 +43,7 @@ namespace MoreStaves.Projectiles
             // So it will lean slightly towards the direction it's moving
             projectile.rotation = projectile.velocity.X * 0.05f;
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 

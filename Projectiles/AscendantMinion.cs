@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds the Ascendant Minion as a projectile
 	public class AscendantMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
@@ -16,7 +17,6 @@ namespace MoreStaves.Projectiles
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
-			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
@@ -29,27 +29,28 @@ namespace MoreStaves.Projectiles
 		{
 			projectile.width = 22;
 			projectile.height = 42;
+
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
-
-			// These below are needed for a minion weapon
-			// Only controls if it deals damage to enemies on contact (more on that later)
 			projectile.friendly = true;
-			// Only determines the damage type
+
+			// Deals minion damage
 			projectile.minion = true;
-			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
+
+			// Number of minion slots used
 			projectile.minionSlots = 1f;
-			// Needed so the minion doesn't despawn on collision with enemies or tiles
+
+			// Prevents being destroyed on collision
 			projectile.penetrate = -1;
 		}
 
-		// Here you can decide if your minion breaks things like grass or pots
+		// Prevents tiles being broken by minion
 		public override bool? CanCutTiles()
 		{
 			return false;
 		}
 
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
+		// Disallows minion to deal contact damage
 		public override bool MinionContactDamage()
 		{
 			return false;
@@ -304,6 +305,7 @@ namespace MoreStaves.Projectiles
 			return false;
 		}
 
+		// Inflicts On Fire on contact
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			target.AddBuff(BuffID.OnFire, 300);

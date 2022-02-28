@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+    // Adds projectile shot by Luminite Minion
     class LuminiteBulletProjectile : ModProjectile
     {
         public override void SetStaticDefaults()
@@ -26,12 +27,14 @@ namespace MoreStaves.Projectiles
             projectile.tileCollide = true;
         }
 
+        // Kills projectile on tile collide
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             projectile.Kill();
             return true;
         }
 
+        // Allows projectile to deal contact damage
         public override bool MinionContactDamage()
         {
             return true;

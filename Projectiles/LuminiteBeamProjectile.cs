@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds projectile shot by Luminite Minion
     class LuminiteBeamProjectile : ModProjectile
     {
 		private const float MOVE_DISTANCE = 32f;
