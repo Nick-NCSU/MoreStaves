@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds the Stone Minion as a projectile.
 	public class StoneMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
@@ -16,12 +17,11 @@ namespace MoreStaves.Projectiles
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
-			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
-			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
+			// Ensures minion can properly spawn when summoned and is replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
+			// Damage reduction related to homing attacks
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
 
@@ -29,28 +29,31 @@ namespace MoreStaves.Projectiles
 		{
 			projectile.width = 96;
 			projectile.height = 96;
+
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = true;
-
-			// These below are needed for a minion weapon
-			// Only controls if it deals damage to enemies on contact (more on that later)
 			projectile.friendly = true;
-			// Only determines the damage type
+
+			// Deals minion damage
 			projectile.minion = true;
-			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
+
+			// Number of minion slots used
 			projectile.minionSlots = 1f;
-			// Needed so the minion doesn't despawn on collision with enemies or tiles
+			
+			// Destroys after 5 hits
 			projectile.penetrate = 5;
+			
+			// Despawns after 2 seconds
 			projectile.timeLeft = 120;
 		}
 
-		// Here you can decide if your minion breaks things like grass or pots
+		// Prevents tiles being broken by minion
 		public override bool? CanCutTiles()
 		{
 			return false;
 		}
 
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
+		// Allows minion to deal contact damage
 		public override bool MinionContactDamage()
 		{
 			return true;
@@ -71,29 +74,14 @@ namespace MoreStaves.Projectiles
 				projectile.Kill();
 			}
 			#endregion
+
 			#region Movement
 			Vector2 down = new Vector2(0, 1);
 			projectile.velocity = (projectile.velocity  + down);
 			#endregion
 
 			#region Animation and visuals
-			// So it will lean slightly towards the direction it's moving
-			projectile.rotation = projectile.velocity.X * 0.05f;
-
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 

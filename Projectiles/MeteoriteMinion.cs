@@ -6,22 +6,23 @@ using Terraria.ModLoader;
 
 namespace MoreStaves.Projectiles
 {
+	// Adds the Meteorite Minion as a projectile.
 	public class MeteoriteMinion : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
 			DisplayName.SetDefault("Meteorite");
+
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[projectile.type] = 1;
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[projectile.type] = true;
 
-			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
-			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
+			// Ensures minion can properly spawn when summoned and is replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
-			// Don't mistake this with "if this is true, then it will automatically home". It is just for damage reduction for certain NPCs
+			// Damage reduction related to homing attacks
 			ProjectileID.Sets.Homing[projectile.type] = true;
 		}
 
@@ -29,27 +30,28 @@ namespace MoreStaves.Projectiles
 		{
 			projectile.width = 52;
 			projectile.height = 52;
+
 			// Makes the minion go through tiles freely
 			projectile.tileCollide = false;
-
-			// These below are needed for a minion weapon
-			// Only controls if it deals damage to enemies on contact (more on that later)
 			projectile.friendly = true;
-			// Only determines the damage type
+
+			// Deals minion damage
 			projectile.minion = true;
-			// Amount of slots this minion occupies from the total minion slots available to the player (more on that later)
+
+			// Number of minion slots used
 			projectile.minionSlots = 1f;
-			// Needed so the minion doesn't despawn on collision with enemies or tiles
+
+			// Prevents being destroyed on collision
 			projectile.penetrate = -1;
 		}
 
-		// Here you can decide if your minion breaks things like grass or pots
+		// Prevents tiles being broken by minion
 		public override bool? CanCutTiles()
 		{
 			return false;
 		}
 
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
+		// Allows minion to deal contact damage
 		public override bool MinionContactDamage()
 		{
 			return true;
@@ -79,22 +81,26 @@ namespace MoreStaves.Projectiles
 			float distanceToCursor = vectorToCursor.Length();
 			if(projectile.velocity == Vector2.Zero)
             {
+				// If there is a case where it's not moving at all, give it a little "poke"
 				projectile.velocity -= new Vector2(0.05f, 0.01f);
             }
 			else if (distanceToCursor > 80)
 			{
+				// Move towards cursor
 				vectorToCursor.Normalize();
 				vectorToCursor *= speed;
 				projectile.velocity = (projectile.velocity * (inertia - 1) + vectorToCursor) / inertia;
 			} 
 			else if (distanceToCursor < 10)
 			{
+				// Move away from cursor
 				vectorToCursor.Normalize();
 				vectorToCursor *= speed;
 				projectile.velocity = (projectile.velocity * (inertia - 1) - vectorToCursor) / inertia;
 			}
 			else 
             {
+				// Travel in bounds around cursor
 				if(vectorToCursor.X > 0 && vectorToCursor.Y > 0)
                 {
 					projectile.velocity += new Vector2(0, -0.01f);
@@ -118,25 +124,13 @@ namespace MoreStaves.Projectiles
 			// So it will lean slightly towards the direction it's moving
 			projectile.rotation = projectile.velocity.X * 0.05f;
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
-			projectile.frameCounter++;
-			if (projectile.frameCounter >= frameSpeed)
-			{
-				projectile.frameCounter = 0;
-				projectile.frame++;
-				if (projectile.frame >= Main.projFrames[projectile.type])
-				{
-					projectile.frame = 0;
-				}
-			}
-
-			// Some visuals here
+			// Adds light around the minion
 			Lighting.AddLight(projectile.Center, Color.White.ToVector3() * 0.78f);
 			#endregion
 
 		}
 
+		// Inflicts On Fire when dealing contact damage
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
         {
 			target.AddBuff(BuffID.OnFire, 300);
